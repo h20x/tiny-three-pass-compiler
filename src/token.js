@@ -25,6 +25,14 @@ class Token {
   getValue() {
     return this._value;
   }
+
+  hasType(types) {
+    if (!Array.isArray(types)) {
+      types = [types];
+    }
+
+    return types.includes(this._type);
+  }
 }
 
 module.exports = { Token, TokenType };
