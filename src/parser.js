@@ -8,7 +8,7 @@ class Parser {
   }
 
   parse() {
-    if (TokenType.EOF === this._currentToken.getType()) {
+    if (this._currentToken.hasType(TokenType.EOF)) {
       return null;
     }
 
@@ -24,7 +24,7 @@ class Parser {
   _parseArgs() {
     this._advance();
 
-    while (TokenType.RSB !== this._currentToken.getType()) {
+    while (!this._currentToken.hasType(TokenType.RSB)) {
       this._args.push(this._currentToken.getValue());
       this._advance();
     }
@@ -35,10 +35,7 @@ class Parser {
   _parseExpr() {
     let result = this._term();
 
-    while (
-      TokenType.PLUS === this._currentToken.getType() ||
-      TokenType.MINUS === this._currentToken.getType()
-    ) {
+    while (this._currentToken.hasType([TokenType.PLUS, TokenType.MINUS])) {
       const op = this._currentToken.getValue();
       this._advance();
       result = { op, a: result, b: this._term() };
@@ -50,10 +47,7 @@ class Parser {
   _term() {
     let result = this._factor();
 
-    while (
-      TokenType.MUL === this._currentToken.getType() ||
-      TokenType.DIV === this._currentToken.getType()
-    ) {
+    while (this._currentToken.hasType([TokenType.MUL, TokenType.DIV])) {
       const op = this._currentToken.getValue();
       this._advance();
       result = { op, a: result, b: this._factor() };
@@ -63,15 +57,15 @@ class Parser {
   }
 
   _factor() {
-    if (TokenType.NUM === this._currentToken.getType()) {
+    if (this._currentToken.hasType(TokenType.NUM)) {
       return this._parseNum();
     }
 
-    if (TokenType.VAR === this._currentToken.getType()) {
+    if (this._currentToken.hasType(TokenType.VAR)) {
       return this._parseVar();
     }
 
-    if (TokenType.LPAR === this._currentToken.getType()) {
+    if (this._currentToken.hasType(TokenType.LPAR)) {
       return this._parseParenteses();
     }
   }
