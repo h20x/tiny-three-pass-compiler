@@ -4,7 +4,8 @@
   "description": "https://www.codewars.com/kata/5265b0885fda8eac5900093b",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "esbuild ./src/compiler.js --bundle --outdir=dist --platform=node"
   },
   "repository": {
     "type": "git",
@@ -18,6 +19,7 @@
   },
   "homepage": "https://github.com/h20x/tiny-three-pass-compiler#readme",
   "devDependencies": {
+    "esbuild": "0.19.11",
     "jest": "^28.1.3",
     "prettier": "^2.8.8"
   }
